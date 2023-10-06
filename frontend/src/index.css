@@ -1,0 +1,16 @@
+.gloock {
+    font-family: 'Gloock', serif;
+}
+
+.maxw140 {
+    max-width: 140px;
+}
+
+.pointerEventsNone {
+    pointer-events: none;
+}
+
+.tdn {
+    text-decoration: none;
+}
+
