@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -37,3 +38,8 @@ Route::middleware('auth:sanctum')->post('/deletecar', [VehicleController::class,
 Route::middleware('auth:sanctum')->post('/selectcar', [VehicleController::class, 'selectcar']);
 
 Route::middleware('auth:sanctum')->post('/updatecar', [VehicleController::class, 'updatecar']);
+
+Route::middleware('auth:sanctum')->post('/newtask', [TaskController::class, 'newtask']);
+
+
+

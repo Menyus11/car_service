@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const Workday = ({ yearNow, monthNow, dayNow, dayName, hourNow, minuteNow }) => {
 
     const nav = useNavigate();
+    const token = Cookie.get('token');
     const selectedcar = Cookie.get('selectedcar') && JSON.parse(Cookie.get('selectedcar'));
     const numberPlate = selectedcar && selectedcar.plate_number;
     const serviceCookie = Cookie.get('service') && JSON.parse(Cookie.get('service'));
@@ -19,8 +20,8 @@ const Workday = ({ yearNow, monthNow, dayNow, dayName, hourNow, minuteNow }) => 
         setServiceTimeAll(currentValue);
     }, [])
 
-    console.log(serviceTimeAll);
-    console.log(serviceCookie);
+    /*     console.log(serviceTimeAll);
+        console.log(serviceCookie); */
 
     const workTime = [
         '08:00', '08:15', '08:30', '08:45', '09:00', '09:15', '09:30',
@@ -68,15 +69,27 @@ const Workday = ({ yearNow, monthNow, dayNow, dayName, hourNow, minuteNow }) => 
 
             }
 
-            const serviceReverse = {
+            const serviceReserved = {
                 plate_number: numberPlate,
-                serviceTime: serviceTimeAll,
-                serviceDate: serviceDate
+                service_time: serviceTimeAll,
+                service_date: serviceDate,
+                oil_change: parseInt(serviceCookie.oilchange),
+                tire_service: parseInt(serviceCookie.tireservice),
+                brake_service: parseInt(serviceCookie.brakeservice),
+                aircondition_service: parseInt(serviceCookie.airconditionservice),
+                carwash: parseInt(serviceCookie.carwash)
             }
-            console.log(serviceReverse);
+
+            fetch('http://localhost:8000/api/newtask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }, body: JSON.stringify(serviceReserved)
+            })
         }
 
-        /* nav('/') */
+
     }
 
     return (
